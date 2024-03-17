@@ -1,16 +1,18 @@
-# Health News App PHP
+# Health News App API
 
-This a RestFul API for simple health news app.
+This is a RestFul API for a simple health news app.
 
-## Table of Contents
+## Installation
 
-- [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+Clone the repository
 
-## Getting Started
+```bash
+git clone https://github.com/reviwh/kesehatan-api.git
+```
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+## Documentation
+Please refer to our extensive Wiki documentation for more information.
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

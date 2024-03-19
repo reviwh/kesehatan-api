@@ -12,7 +12,7 @@ final class NewsModel
 
     public function getAllNews()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query("SELECT * FROM  {$this->table} ORDER BY date DESC");
         return $this->db->resultSet();
     }
 
@@ -25,7 +25,7 @@ final class NewsModel
     public function searchNews()
     {
         $q = $_POST['q'];
-        $this->db->query("SELECT * FROM {$this->table} WHERE title LIKE :q");
+        $this->db->query("SELECT * FROM {$this->table} WHERE title LIKE :q ORDER BY date DESC");
         $this->db->bind('q', "%$q%");
         return $this->db->resultSet();
     }

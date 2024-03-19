@@ -53,7 +53,7 @@ final class UserModel
      * @return mixed The user data if found, otherwise null.
      */
     public function getUser($username){
-        $this->db->query("SELECT * FROM {$this->table} WHERE username=:username");
+        $this->db->query("SELECT username, name, email FROM {$this->table} WHERE username=:username");
         $this->db->bind('username', $username);
         return $this->db->single();
     }

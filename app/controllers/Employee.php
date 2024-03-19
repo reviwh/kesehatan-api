@@ -32,7 +32,8 @@ class Employee extends Controller
      *
      * @return void
      */
-    public function insert(){
+    public function insert()
+    {
         if ($this->model('EmployeeModel')->insertEmployee($_POST) > 0) {
             $response["success"] = true;
             $response["message"] = "Employee inserted successfully";
@@ -48,7 +49,8 @@ class Employee extends Controller
      *
      * @return void
      */
-    public function update(){
+    public function update()
+    {
         if ($this->model('EmployeeModel')->updateEmployee($_POST) > 0) {
             $response["success"] = true;
             $response["message"] = "Employee updated successfully";
@@ -58,14 +60,15 @@ class Employee extends Controller
         }
         echo json_encode($response);
     }
-    
+
     /**
      * Delete an employee by their employee number.
      *
      * @param int $no_bp The employee number
      * @return void
      */
-    public function delete($no_bp){
+    public function delete($no_bp)
+    {
         if ($this->model('EmployeeModel')->deleteEmployee($no_bp) > 0) {
             $response["success"] = true;
             $response["message"] = "Employee deleted successfully";

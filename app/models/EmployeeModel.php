@@ -17,7 +17,7 @@ final class EmployeeModel
      */
     public function getAllEmployees()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY name ASC");
         return $this->db->resultSet();
     }
 
@@ -101,7 +101,7 @@ final class EmployeeModel
      */
     public function searchEmployees(){
         $q = $_POST['q'];
-        $query = "SELECT * FROM employees WHERE name LIKE :q";
+        $query = "SELECT * FROM employees WHERE name LIKE :q ORDER BY name ASC";
         $this->db->query($query);
         $this->db->bind('q', "%$q%");
         return $this->db->resultSet();

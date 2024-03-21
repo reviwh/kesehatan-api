@@ -20,12 +20,17 @@ final class UserModel
     {
         $response = array();
         $stored_password = $this->getPassword($data['username']);
-        if (password_verify($data['password'], $stored_password['password'])) {
-            $response["success"] = true;
-            $response["message"] = "Login success";
+        if (isset($stored_password['password'])) {
+            if (password_verify($data['password'], $stored_password['password'])) {
+                $response["success"] = true;
+                $response["message"] = "Login success";
+            } else{
+                $response["success"] = false;
+                $response["message"] = "Username or password isn't correct";
+            }
         } else {
             $response["success"] = false;
-            $response["message"] = "Login failed";
+            $response["message"] = "User doesn't exists";
         }
         return $response;
     }
@@ -36,7 +41,8 @@ final class UserModel
      * @param array $data Associative array containing username, password, name, and email
      * @return int Number of rows affected by the insert query
      */
-    public function register($data){
+    public function register($data)
+    {
         $this->db->query("INSERT INTO {$this->table} VALUES (:username, :password, :name, :email)");
         $this->db->bind('username', $data['username']);
         $this->db->bind('password', password_hash($data['password'], PASSWORD_BCRYPT));
@@ -52,7 +58,8 @@ final class UserModel
      * @param string $username The username of the user to retrieve.
      * @return mixed The user data if found, otherwise null.
      */
-    public function getUser($username){
+    public function getUser($username)
+    {
         $this->db->query("SELECT username, name, email FROM {$this->table} WHERE username=:username");
         $this->db->bind('username', $username);
         return $this->db->single();
@@ -63,13 +70,14 @@ final class UserModel
      *
      * @return int Number of rows affected by the update query
      */
-    public function changePassword(){
+    public function changePassword()
+    {
         $old = $this->getPassword($_POST['username']);
-        
-        if(!password_verify($_POST['old'], $old['password'])){
+
+        if (!password_verify($_POST['old'], $old['password'])) {
             return 0;
         }
-        
+
         $this->db->query("UPDATE {$this->table} SET password = :password WHERE username = :username");
         $this->db->bind('username', $_POST['username']);
         $this->db->bind('password', password_hash($_POST['password'], PASSWORD_BCRYPT));
@@ -83,10 +91,11 @@ final class UserModel
      * @param array $data Associative array containing username, name, and email
      * @return int Number of rows affected by the update query
      */
-    public function updateUser($data){
+    public function updateUser($data)
+    {
         $old = $this->getPassword($_POST['username']);
-        
-        if(!password_verify($_POST['password'], $old['password'])){
+
+        if (!password_verify($_POST['password'], $old['password'])) {
             return 0;
         }
 
@@ -104,7 +113,8 @@ final class UserModel
      * @param string $username The username to retrieve the password for.
      * @return mixed The password associated with the username.
      */
-    private function getPassword($username){
+    private function getPassword($username)
+    {
         $this->db->query("SELECT password FROM {$this->table} WHERE username=:username");
         $this->db->bind('username', $username);
         return $this->db->single();
